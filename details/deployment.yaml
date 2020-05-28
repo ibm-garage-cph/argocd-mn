@@ -8,8 +8,6 @@ spec:
       app: details-nodejs
   template:
     metadata:
-      annotations:
-        sidecar.istio.io/inject: "true"
       labels:
         app: details-nodejs
     spec:

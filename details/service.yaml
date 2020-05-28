@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: details-nodejs
   labels:
+    app: details
+    service: details
     name: app-metrics-label
 spec:
   selector:

@@ -1,0 +1,125 @@
+############################################
+# ArgoCD project
+############################################
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: bookinfo-mn-prod
+  namespace: argocd
+spec:
+  description: Production environment for Mihai Nueleanu's bookinfo app
+  destinations:
+    - namespace: bookinfo-mn-prod
+      server: "*"
+  sourceRepos:
+    - "https://github.com/ibm-garage-cph/bookinfo-gitops"
+---
+############################################
+# ArgoCD app - details service
+############################################
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: details
+  namespace: argocd
+spec:
+  destination:
+    namespace: bookinfo-mn-prod
+    server: "https://kubernetes.default.svc"
+  project: bookinfo-mn-prod
+  source:
+    path: details
+    repoURL: "https://github.com/ibm-garage-cph/bookinfo-gitops"
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+############################################
+# ArgoCD app - istio gateway
+############################################
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio
+  namespace: argocd
+spec:
+  destination:
+    namespace: bookinfo-mn-prod
+    server: "https://kubernetes.default.svc"
+  project: bookinfo-mn-prod
+  source:
+    path: istio
+    repoURL: "https://github.com/ibm-garage-cph/bookinfo-gitops"
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+############################################
+# ArgoCD app - productpage service
+############################################
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: productpage
+  namespace: argocd
+spec:
+  destination:
+    namespace: bookinfo-mn-prod
+    server: "https://kubernetes.default.svc"
+  project: bookinfo-mn-prod
+  source:
+    path: productpage
+    repoURL: "https://github.com/ibm-garage-cph/bookinfo-gitops"
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+############################################
+# ArgoCD app - ratings service
+############################################
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ratings
+  namespace: argocd
+spec:
+  destination:
+    namespace: bookinfo-mn-prod
+    server: "https://kubernetes.default.svc"
+  project: bookinfo-mn-prod
+  source:
+    path: ratings
+    repoURL: "https://github.com/ibm-garage-cph/bookinfo-gitops"
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+############################################
+# ArgoCD app - reviews service
+############################################
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: reviews
+  namespace: argocd
+spec:
+  destination:
+    namespace: bookinfo-mn-prod
+    server: "https://kubernetes.default.svc"
+  project: bookinfo-mn-prod
+  source:
+    path: reviews
+    repoURL: "https://github.com/ibm-garage-cph/bookinfo-gitops"
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
